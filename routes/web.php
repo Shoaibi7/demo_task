@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,13 @@ Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe', 'stripe')->name('stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
+
+// Route::get('/admin/notifications', [NotificationController::class,'index'])->name('admin.notifications.index');
+Route::post('/admin/notifications/send', [NotificationController::class,'sendNotifications'])->name('admin.notifications.send');
+Route::get('/admin/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+Route::get('/admin/notifications/create/{id}', [NotificationController::class, 'create'])->name('notifications.create');
+Route::post('/admin/notifications/store', [NotificationController::class, 'store'])->name('notifications.store');
+
 
 Auth::routes();
 
