@@ -74,6 +74,8 @@
                 <th scope="col">Actions</th>
               </tr>
             </thead>
+            @if (empty($company))
+             
             <tbody id="list_company">
                 @foreach ($companies as $company)
               <tr id="row_company_{{ $company->id  }}">
@@ -87,7 +89,13 @@
                 </td>
               </tr>
             @endforeach
+            
             </tbody>
+            @else
+            <tbody>
+            <tr><span>No Data Found</span></tr>
+            </tbody>
+          @endif
           </table>
     </div>
         </div>
@@ -153,7 +161,7 @@
                 <input type="text" class="form-control" id="address" name="address"  required>
             </div>
             <!-- Add more form fields as needed -->
-            <button type="submit" class="btn btn-primary btn-sm" id="update_company_btn" data-id="{{ $company->id  }}">Update</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="update_company_btn" >Update</button>
         </form>
            
           
