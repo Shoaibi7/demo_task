@@ -60,9 +60,12 @@
         <div class="col">
     <!-- Button trigger modal -->
     <div class="mb-3 mt-4">
-        <button type="button" class="btn btn-primary btn-sm" id="add_company" data-bs-toggle="modal" data-bs-target="#addModal">
+        <button type="button" class="btn btn-primary btn-sm ml-2" id="add_company" data-bs-toggle="modal" data-bs-target="#addModal">
             Add Company
         </button>
+        <a href="{{ route('notifications.index') }}"><button type="button" class="btn btn-info btn-sm ml-auto" >
+          Notifications
+      </button></a>
     </div>
     <div class="mb-3">
         <table class="table">
