@@ -10,6 +10,8 @@ use App\Notifications\NotificationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+
+
 class NotificationController extends Controller
 {
     
@@ -64,8 +66,6 @@ class NotificationController extends Controller
 
     public function sendNotifications(Request $request)
 {
-    
-
     // Validate the form data
     $request->validate([
         'selectedUsers' => 'required|array',
@@ -80,12 +80,15 @@ class NotificationController extends Controller
     // Create the notification instance
     $notification = new NotificationEmail($request->input('notification_subject'), $request->input('notification_body'));
 
-    // Find users by their IDs and notify them
+    // Find users by their IDs
     $usersToNotify = User::whereIn('id', $selectedUserIds)->get();
-    \Illuminate\Support\Facades\Notification::send($usersToNotify, $notification);
+
+    // Dispatch a job to send the notification asynchronously for each user
+    foreach ($usersToNotify as $user) {
+        SendNotification::dispatch($user, $notification);
+    }
 
     // Redirect back with a success message
-    // return redirect()->back()->with('success', 'Notifications sent successfully');
-    return redirect('/admin/notifications')->with('success', 'Notifications sent successfully');
+    return redirect('/admin/notifications')->with('success', 'Notifications queued for sending.');
 }
 }
